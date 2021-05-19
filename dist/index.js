@@ -32,10 +32,9 @@ App.use(express_1.default.json());
 App.use("/spaceship", spaceshipRouter_1.spaceshipRouter);
 App.use("/location", locationRouter_1.locationRouter);
 App.get('/', function (req, res) {
-    res.send('Welcome to Spaceship REST API');
+    res.sendFile(__dirname + '/views/index.html');
 });
 App.get('/location', function (req, res) {
-    // res.send('db.query('select * from Spaceship')')
 });
 var port = process.env.PORT || 3000;
 App.listen(port, function () { return console.log("App listening on port: " + port); });

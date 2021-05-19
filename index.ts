@@ -10,7 +10,7 @@ App.use("/spaceship", spaceshipRouter);
 App.use("/location", locationRouter);
 
 App.get('/', (req, res) => {
-    res.sendFile('./views/index.html')
+    res.sendFile(__dirname + '/views/index.html')
 });
 
 App.get('/location', (req, res) => {

@@ -1,0 +1,99 @@
+<html>
+	<head>
+		<title>Spaceship API</title>
+	</head><
+    
+	<body>
+		<h1>Spaceship Database API</h1>
+		<p>A simple REST API that deals with the management and creation of hypothetical spaceships and hypothetical locations.</p>
+		<h2>Methods</h2>
+		<h3>/spaceship</h3>
+		<h4>/spaceship/create - POST</h4>
+		<p>Create a new spaceship with required parameters, name, model, location ID and status. Status has to be either decommissioned, operational or maintenance.
+    
+			<br />
+			<br />
+    Example POST Object:
+    
+			<br />{
+    
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'Name': 'Trafalgar,
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'Model': 'UNSC-2',
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'locatedAt': 1
+			<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;'Status': 'operational
+			<br />}
+    
+		</p>
+		<h4>/spaceship/update - PUT</h4>
+		<p>Update a spaceship's status to operational, maintenance or decommissioned. 
+    
+			<br />
+			<br />
+    Example PUT Object:
+    
+			<br />{
+    
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'spaceship': 1,
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'status': 'decommissioned'
+			<br />}
+    
+		</p>
+		<h4>/spaceship/remove - DELETE</h4>
+		<p>Remove a spaceship from the database. Must provide ID of spaceship to be removed.
+    
+			<br />
+			<br />
+    Example DELETE Object:
+    
+			<br />{
+    
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'id': 1
+			<br />}
+    
+		</p>
+		<h4>/spaceship/travel - PUT</h4>
+		<p>Update a spaceship's location to signify their new location. User to provide ID of spaceship to be moved, and ID of destination location.
+    
+			<br />
+			<br />
+    Example PUT Object:
+    
+			<br />{
+    
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'spaceship': 1,
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'location': 2
+			<br />}
+    
+		</p>
+		<h3>/location</h3>
+		<h4>/location/create - POST</h4>
+		<p>Create a new location with required parameters, city, planet, and max capacity of ships allowed at location.
+    
+			<br />
+			<br />
+    Example POST Object:
+    
+			<br />{
+    
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'City': 'Sydney,
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'Planet': 'Earth',
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'Capacity': 1
+			<br />}
+    
+		</p>
+		<h4>/location/remove - DELETE</h4>
+		<p>Remove a location from the database. Must provide ID of location to be removed.
+    
+			<br />
+			<br />
+    Example DELETE Object:
+    
+			<br />{
+    
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;'id': 1
+			<br />}
+    
+		</p>
+	</body>
+</html>

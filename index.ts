@@ -10,11 +10,10 @@ App.use("/spaceship", spaceshipRouter);
 App.use("/location", locationRouter);
 
 App.get('/', (req, res) => {
-    res.send('Welcome to Spaceship REST API')
+    res.sendFile('./views/index.html')
 });
 
 App.get('/location', (req, res) => {
-    // res.send('db.query('select * from Spaceship')')
 })
 
 

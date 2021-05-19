@@ -1,13 +1,13 @@
 import requests
 
-url = 'http://localhost:3000/spaceship/create'
+url = 'http://54.252.152.2:3000/spaceship/create'
 
 
 spaceship = {
     'id' : '0',
     'Name' : 'test name',
     'Model' :  'test model',
-    'locatedAt': '5',
+    'locatedAt': '1',
     'Status': 'operational'
 }
 

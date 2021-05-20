@@ -5,8 +5,8 @@ var db_1 = require("../data/db");
 // facilitates the addition of spaceships into Spaceship table in MySQL Spaceships Database server. 
 // Given a Spaceship object, adds details to Spaceship table in DBMS.
 var create = function (spaceship, callback) {
-    var queryString = "INSERT INTO Spaceship (id, Name, Model, locatedAt, Status) VALUES (?, ?, ?, ?, ?)";
-    db_1.db.query(queryString, [spaceship.id, spaceship.Name, spaceship.Model, spaceship.locatedAt, spaceship.Status], function (err) {
+    var queryString = "INSERT INTO Spaceship (Name, Model, locatedAt, Status) VALUES (?, ?, ?, ?)";
+    db_1.db.query(queryString, [spaceship.Name, spaceship.Model, spaceship.locatedAt, spaceship.Status], function (err) {
         if (err) {
             callback(err);
         }
@@ -89,7 +89,7 @@ var update = function (spaceship, status, callback) {
     });
 };
 exports.update = update;
-//
+// Lists all spaceships stored in Spaceships DB.
 var list = function (callback) {
     var queryString = "SELECT * FROM Spaceship";
     db_1.db.query(queryString, function (err, result) {

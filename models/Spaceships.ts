@@ -5,11 +5,11 @@ import { RowDataPacket } from "mysql2";
 // facilitates the addition of spaceships into Spaceship table in MySQL Spaceships Database server. 
 // Given a Spaceship object, adds details to Spaceship table in DBMS.
 export const create = (spaceship: Spaceship, callback: Function) => {
-  const queryString = "INSERT INTO Spaceship (id, Name, Model, locatedAt, Status) VALUES (?, ?, ?, ?, ?)"
+  const queryString = "INSERT INTO Spaceship (Name, Model, locatedAt, Status) VALUES (?, ?, ?, ?)"
 
   db.query(
     queryString,
-    [spaceship.id, spaceship.Name, spaceship.Model, spaceship.locatedAt, spaceship.Status],
+    [spaceship.Name, spaceship.Model, spaceship.locatedAt, spaceship.Status],
     (err) => {
       if (err) {callback(err)};
 
@@ -96,7 +96,7 @@ export const update = (spaceship: number, status: string , callback: Function) =
   );
 };
 
-//
+// Lists all spaceships stored in Spaceships DB.
 export const list = (callback: Function) => {
   const queryString = "SELECT * FROM Spaceship"
 

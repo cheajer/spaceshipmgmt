@@ -17,7 +17,7 @@ create table Spaceship (
     foreign key (locatedAt) references Location (id)
 );
 
-
+--Starter variables for testing
 insert into Location values (0, "Swordbase", "Reach", "5");
 insert into Location values (0, "Sydney", "Earth", "5");
 insert into Spaceship values (0, 1, "Pelican", "UNSC-1", "operational");

@@ -1,6 +1,6 @@
 import requests
 
-url = 'http://localhost:3000/spaceship/create'
+url = 'http://3.26.44.154:3000/spaceship/create'
 
 
 spaceship = {

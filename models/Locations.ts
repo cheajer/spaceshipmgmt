@@ -1,7 +1,9 @@
 import { Location } from "../types/types";
 import { db } from "../data/db";
-import { OkPacket, RowDataPacket } from "mysql2";
 
+
+// facilitates the addition of locations into Location table in MySQL Spaceships Database server. 
+// Given a Location object, adds details to Location table in DBMS.
 export const create = (location: Location, callback: Function) => {
     const queryString = "INSERT INTO Location (City, Planet, Capacity) VALUES (?, ?, ?)"
     db.query(
@@ -14,7 +16,8 @@ export const create = (location: Location, callback: Function) => {
       }
     );
 };
-  
+// facilitates the removal of locations from Location table in MySQL Spaceships Database server.
+// Given a Location ID, removes that location from Location table in DBMS.
 export const remove = (id: number, callback: Function) => {
     const queryString = "DELETE FROM Location WHERE id = (?)"
     db.query(

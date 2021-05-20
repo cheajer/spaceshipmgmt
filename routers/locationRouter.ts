@@ -18,7 +18,7 @@ locationRouter.post("/create", async (req: Request, res: Response) => {
     });
   });
   
-  locationRouter.delete('/remove', function (req: Request, res: Response) {
+locationRouter.delete('/remove', function (req: Request, res: Response) {
     const id = req.body.id
   
     locationModel.remove(id,  (err: Error) => {
@@ -29,6 +29,17 @@ locationRouter.post("/create", async (req: Request, res: Response) => {
       res.status(200).json({"message": message});
     })
   
-  });
+});
+
+locationRouter.get('/list', function (req: Request, res: Response) {
+    locationModel.list((err: Error, locations: Location[]) => {
+      if (err) {
+        return res.status(500).json({"message": err.message});
+      }
+      res.status(200).json({"Locations": locations})
+    })
+})
+
+  
 
 export {locationRouter};

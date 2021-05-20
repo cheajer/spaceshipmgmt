@@ -91,3 +91,11 @@ locationRouter.delete('/remove', function (req, res) {
         res.status(200).json({ "message": message });
     });
 });
+locationRouter.get('/list', function (req, res) {
+    locationModel.list(function (err, locations) {
+        if (err) {
+            return res.status(500).json({ "message": err.message });
+        }
+        res.status(200).json({ "Locations": locations });
+    });
+});

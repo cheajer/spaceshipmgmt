@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove = exports.create = void 0;
+exports.list = exports.remove = exports.create = void 0;
 var db_1 = require("../data/db");
 // facilitates the addition of locations into Location table in MySQL Spaceships Database server. 
 // Given a Location object, adds details to Location table in DBMS.
@@ -28,3 +28,15 @@ var remove = function (id, callback) {
     });
 };
 exports.remove = remove;
+var list = function (callback) {
+    var queryString = "SELECT * FROM Location";
+    db_1.db.query(queryString, function (err, result) {
+        if (err) {
+            callback(err);
+        }
+        ;
+        var rows = result;
+        callback(null, rows);
+    });
+};
+exports.list = list;

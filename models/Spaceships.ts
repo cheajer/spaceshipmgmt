@@ -1,7 +1,9 @@
 import { Spaceship } from "../types/types";
 import { db } from "../data/db";
-import { OkPacket, RowDataPacket } from "mysql2";
+import { RowDataPacket } from "mysql2";
 
+// facilitates the addition of spaceships into Spaceship table in MySQL Spaceships Database server. 
+// Given a Spaceship object, adds details to Spaceship table in DBMS.
 export const create = (spaceship: Spaceship, callback: Function) => {
   const queryString = "INSERT INTO Spaceship (id, Name, Model, locatedAt, Status) VALUES (?, ?, ?, ?, ?)"
 
@@ -16,6 +18,8 @@ export const create = (spaceship: Spaceship, callback: Function) => {
   );
 };
 
+// facilitates the removal of spaceships from Spaceship table in MySQL Spaceships Database server.
+// Given a Spaceship ID, removes that spaceship from Spaceship table in DBMS.
 export const remove = (id: number, callback: Function) => {
   const queryString = "DELETE FROM Spaceship WHERE id = (?)"
 
@@ -30,9 +34,12 @@ export const remove = (id: number, callback: Function) => {
   );
 };
 
+// Given a Spaceship ID, and Location ID, moves spaceship with that Spaceship ID, to location with Location ID.
 export const travel = (spaceship: number,location: number , callback: Function) => {
   var maxCapacity: number;
   var currentCapacity: number;
+  // To travel, a spaceship's status must be 'operational' not 'maintenance' or 'decommissioned'
+  // Only select if status is 'operational'
   const statusQuery = "SELECT * from Spaceship WHERE id = (?) AND status = 'operational' "
   db.query(statusQuery, [spaceship], (err, result) => {
     if (err) {callback(err)}
@@ -42,13 +49,15 @@ export const travel = (spaceship: number,location: number , callback: Function) 
       });
     }
   });
-
+  // To travel, Location must have capacity for another spaceship
+  // 1. Get the number of spaceships at location 
   const currentCapacityQuery = "SELECT count(*) as currCap from Spaceship WHERE locatedAt = (?)"
   db.query(currentCapacityQuery, [location], (err, result) => {
     if (err) {callback(err)}
     currentCapacity = (<RowDataPacket>result)[0].currCap
   });
 
+  // 2. Get the max capacity at the destination. If the current capacity is reached or exceeded, do not allow travel.
   const capacityQuery = "SELECT capacity from Location WHERE id = (?)"
   db.query(capacityQuery, [location], (err, result) => {
     if (err) {callback(err)}
@@ -58,7 +67,7 @@ export const travel = (spaceship: number,location: number , callback: Function) 
     }
   });
 
-
+  // Otherwise, if conditions allow (i.e. enough capacity, spaceship operational), update spaceship location
   const queryString = "UPDATE Spaceship SET locatedAt = (?) WHERE id = (?)"
   db.query(
     queryString,
@@ -71,6 +80,8 @@ export const travel = (spaceship: number,location: number , callback: Function) 
   );
 };
 
+// Update a spaceship's status to one of the following [operational, maintenance, decommissioned]
+// Data validation is handled in locationRouter.ts
 export const update = (spaceship: number, status: string , callback: Function) => {
   const queryString = "UPDATE Spaceship SET status = (?) WHERE id = (?)"
 
@@ -85,6 +96,7 @@ export const update = (spaceship: number, status: string , callback: Function) =
   );
 };
 
+//
 export const list = (callback: Function) => {
   const queryString = "SELECT * FROM Spaceship"
 
@@ -96,6 +108,4 @@ export const list = (callback: Function) => {
       callback(null, rows)
     }
   )
-
-
 };

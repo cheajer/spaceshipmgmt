@@ -1,5 +1,6 @@
 import { Location } from "../types/types";
 import { db } from "../data/db";
+import { RowDataPacket } from "mysql2";
 
 
 // facilitates the addition of locations into Location table in MySQL Spaceships Database server. 
@@ -30,3 +31,16 @@ export const remove = (id: number, callback: Function) => {
       }
     );
 };
+
+export const list = (callback: Function) => {
+    const queryString = "SELECT * FROM Location"
+  
+    db.query(
+      queryString,
+      (err, result) => {
+        if (err) {callback(err)};
+        const rows = <RowDataPacket>result
+        callback(null, rows)
+      }
+    )
+  };

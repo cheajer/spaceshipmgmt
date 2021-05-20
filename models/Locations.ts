@@ -7,11 +7,10 @@ export const create = (location: Location, callback: Function) => {
     db.query(
       queryString,
       [location.City, location.Planet, location.Capacity],
-      (err, result) => {
+      (err) => {
         if (err) {callback(err)};
-  
-        const insertId = (<OkPacket> result).insertId;
-        callback(null, insertId);
+
+        callback(null);
       }
     );
 };
@@ -21,11 +20,10 @@ export const remove = (id: number, callback: Function) => {
     db.query(
       queryString,
       [id],
-      (err, result) => {
+      (err) => {
         if (err) {callback(err)};
-  
-        const insertId = (<OkPacket> result).insertId;
-        callback(null, insertId);
+
+        callback(null);
       }
     );
 };

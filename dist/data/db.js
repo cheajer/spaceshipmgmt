@@ -29,6 +29,6 @@ dotenv.config();
 exports.db = mysql2_1.default.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '123',
+    password: 'spaceship',
     database: 'Spaceships'
 });

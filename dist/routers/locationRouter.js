@@ -71,21 +71,23 @@ locationRouter.post("/create", function (req, res) { return __awaiter(void 0, vo
     var newLocation;
     return __generator(this, function (_a) {
         newLocation = req.body;
-        locationModel.create(newLocation, function (err, id) {
+        locationModel.create(newLocation, function (err) {
             if (err) {
                 return res.status(500).json({ "message": err.message });
             }
-            res.status(200).json({ "Location ID": id });
+            var message = "Succesfully created a location.";
+            res.status(200).json({ "message": message });
         });
         return [2 /*return*/];
     });
 }); });
 locationRouter.delete('/remove', function (req, res) {
     var id = req.body.id;
-    locationModel.remove(id, function (err, id) {
+    locationModel.remove(id, function (err) {
         if (err) {
             return res.status(500).json({ "message": err.message });
         }
-        res.status(200).json({ "Location ID": id });
+        var message = "Succesfully removed a location.";
+        res.status(200).json({ "message": message });
     });
 });

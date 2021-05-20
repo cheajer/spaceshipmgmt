@@ -1,33 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.update = exports.travel = exports.remove = exports.create = void 0;
+exports.list = exports.update = exports.travel = exports.remove = exports.create = void 0;
 var db_1 = require("../data/db");
 var create = function (spaceship, callback) {
     var queryString = "INSERT INTO Spaceship (id, Name, Model, locatedAt, Status) VALUES (?, ?, ?, ?, ?)";
-    db_1.db.query(queryString, [spaceship.id, spaceship.Name, spaceship.Model, spaceship.locatedAt, spaceship.Status], function (err, result) {
+    db_1.db.query(queryString, [spaceship.id, spaceship.Name, spaceship.Model, spaceship.locatedAt, spaceship.Status], function (err) {
         if (err) {
             callback(err);
         }
         ;
-        var insertId = result.insertId;
-        callback(null, insertId);
+        callback(null);
     });
 };
 exports.create = create;
 var remove = function (id, callback) {
     var queryString = "DELETE FROM Spaceship WHERE id = (?)";
-    db_1.db.query(queryString, [id], function (err, result) {
+    db_1.db.query(queryString, [id], function (err) {
         if (err) {
             callback(err);
         }
         ;
-        var insertId = result.insertId;
-        callback(null, insertId);
+        callback(null);
     });
 };
 exports.remove = remove;
 var travel = function (spaceship, location, callback) {
-    var location_id;
     var maxCapacity;
     var currentCapacity;
     var statusQuery = "SELECT * from Spaceship WHERE id = (?) AND status = 'operational' ";
@@ -59,25 +56,35 @@ var travel = function (spaceship, location, callback) {
         }
     });
     var queryString = "UPDATE Spaceship SET locatedAt = (?) WHERE id = (?)";
-    db_1.db.query(queryString, [location, spaceship], function (err, result) {
+    db_1.db.query(queryString, [location, spaceship], function (err) {
         if (err) {
             callback(err);
         }
         ;
-        var insertId = result.insertId;
-        callback(null, insertId);
+        callback(null);
     });
 };
 exports.travel = travel;
 var update = function (spaceship, status, callback) {
     var queryString = "UPDATE Spaceship SET status = (?) WHERE id = (?)";
-    db_1.db.query(queryString, [status, spaceship], function (err, result) {
+    db_1.db.query(queryString, [status, spaceship], function (err) {
         if (err) {
             callback(err);
         }
         ;
-        var insertId = result.insertId;
-        callback(null, insertId);
+        callback(null);
     });
 };
 exports.update = update;
+var list = function (callback) {
+    var queryString = "SELECT * FROM Spaceship";
+    db_1.db.query(queryString, function (err, result) {
+        if (err) {
+            callback(err);
+        }
+        ;
+        var rows = result;
+        callback(null, rows);
+    });
+};
+exports.list = list;

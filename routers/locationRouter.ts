@@ -9,24 +9,24 @@ locationRouter.use(express.urlencoded({
 
 locationRouter.post("/create", async (req: Request, res: Response) => {
     const newLocation: Location = req.body;
-    locationModel.create(newLocation, (err: Error, id: number) => {
+    locationModel.create(newLocation, (err: Error) => {
       if (err) {
         return res.status(500).json({"message": err.message});
-      }
-  
-      res.status(200).json({"Location ID": id});
+      } 
+      const message = "Succesfully created a location.";
+      res.status(200).json({"message": message});
     });
   });
   
   locationRouter.delete('/remove', function (req: Request, res: Response) {
     const id = req.body.id
   
-    locationModel.remove(id,  (err: Error, id: number) => {
+    locationModel.remove(id,  (err: Error) => {
       if (err) {
         return res.status(500).json({"message": err.message});
       }
-  
-      res.status(200).json({"Location ID": id});
+      const message = "Succesfully removed a location.";
+      res.status(200).json({"message": message});
     })
   
   });

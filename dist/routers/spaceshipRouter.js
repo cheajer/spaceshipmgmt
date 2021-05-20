@@ -77,32 +77,35 @@ spaceshipRouter.post("/create", function (req, res) { return __awaiter(void 0, v
     var newSpaceship;
     return __generator(this, function (_a) {
         newSpaceship = req.body;
-        spaceshipModel.create(newSpaceship, function (err, id) {
+        spaceshipModel.create(newSpaceship, function (err) {
             if (err) {
                 return res.status(500).json({ "message": err.message });
             }
-            res.status(200).json({ "Spaceship ID": id });
+            var message = "Spaceship successfully created.";
+            res.status(200).json({ "message": message });
         });
         return [2 /*return*/];
     });
 }); });
 spaceshipRouter.delete('/remove', function (req, res) {
     var id = req.body.id;
-    spaceshipModel.remove(id, function (err, id) {
+    spaceshipModel.remove(id, function (err) {
         if (err) {
             return res.status(500).json({ "message": err.message });
         }
-        res.status(200).json({ "Spaceship ID": id });
+        var message = "Spaceship successfully removed.";
+        res.status(200).json({ "Spaceship ID": message });
     });
 });
 spaceshipRouter.put('/travel', function (req, res) {
     var spaceship = req.body.spaceship;
     var location = req.body.location;
-    spaceshipModel.travel(spaceship, location, function (err, id) {
+    spaceshipModel.travel(spaceship, location, function (err) {
         if (err) {
             return res.status(500).json({ "message": err.message });
         }
-        res.status(200).json({ "Spaceship ID": id });
+        var message = "Travel successfully used.";
+        res.status(200).json({ "message": message });
     });
 });
 spaceshipRouter.put('/update', function (req, res) {
@@ -110,12 +113,21 @@ spaceshipRouter.put('/update', function (req, res) {
     var status = req.body.status;
     var statusList = ['decommissioned', 'maintenance', 'operational'];
     if (!statusList.includes(status)) {
-        return res.status(400).json({ "message": "Invalid status" });
+        return res.status(400).json({ "message": "Invalid status inputted." });
     }
-    spaceshipModel.update(spaceship, status, function (err, id) {
+    spaceshipModel.update(spaceship, status, function (err) {
         if (err) {
             return res.status(500).json({ "message": err.message });
         }
-        res.status(200).json({ "Spaceship ID": id });
+        var message = "Successfully updated Spaceship status.";
+        res.status(200).json({ "message": message });
+    });
+});
+spaceshipRouter.get('/list', function (req, res) {
+    spaceshipModel.list(function (err, spaceships) {
+        if (err) {
+            return res.status(500).json({ "message": err.message });
+        }
+        res.status(200).json({ "Spaceships": spaceships });
     });
 });

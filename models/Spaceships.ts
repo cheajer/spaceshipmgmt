@@ -8,11 +8,10 @@ export const create = (spaceship: Spaceship, callback: Function) => {
   db.query(
     queryString,
     [spaceship.id, spaceship.Name, spaceship.Model, spaceship.locatedAt, spaceship.Status],
-    (err, result) => {
+    (err) => {
       if (err) {callback(err)};
 
-      const insertId = (<OkPacket> result).insertId;
-      callback(null, insertId);
+      callback(null);
     }
   );
 };
@@ -23,17 +22,15 @@ export const remove = (id: number, callback: Function) => {
   db.query(
     queryString,
     [id],
-    (err, result) => {
+    (err) => {
       if (err) {callback(err)};
 
-      const insertId = (<OkPacket> result).insertId;
-      callback(null, insertId);
+      callback(null);
     }
   );
 };
 
 export const travel = (spaceship: number,location: number , callback: Function) => {
-  var location_id;
   var maxCapacity: number;
   var currentCapacity: number;
   const statusQuery = "SELECT * from Spaceship WHERE id = (?) AND status = 'operational' "
@@ -66,11 +63,10 @@ export const travel = (spaceship: number,location: number , callback: Function) 
   db.query(
     queryString,
     [location, spaceship],
-    (err, result) => {
+    (err) => {
       if (err) {callback(err)};
 
-      const insertId = (<OkPacket> result).insertId;
-      callback(null, insertId);
+      callback(null);
     }
   );
 };
@@ -81,11 +77,25 @@ export const update = (spaceship: number, status: string , callback: Function) =
   db.query(
     queryString,
     [status, spaceship],
-    (err, result) => {
+    (err) => {
       if (err) {callback(err)};
 
-      const insertId = (<OkPacket> result).insertId;
-      callback(null, insertId);
+      callback(null);
     }
   );
+};
+
+export const list = (callback: Function) => {
+  const queryString = "SELECT * FROM Spaceship"
+
+  db.query(
+    queryString,
+    (err, result) => {
+      if (err) {callback(err)};
+      const rows = <RowDataPacket>result
+      callback(null, rows)
+    }
+  )
+
+
 };

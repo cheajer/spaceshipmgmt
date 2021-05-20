@@ -61,6 +61,20 @@ locationRouter.get('/list', function (req: Request, res: Response) {
     })
 })
 
-  
+/*
+    Router: /location/reset
+    DELETE Method
+    Calls locationModel.reset to remove all rows from Location table in MySQL
+*/
+locationRouter.delete('/reset', function (req: Request, res: Response) {
+    locationModel.reset((err: Error) => {
+      if (err) { // error handling
+        return res.status(500).json({"message": err.message});
+      }
+      res.status(200).json({"message": "Locations have been reset."})
+    })
+})
+
+
 
 export {locationRouter};

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.list = exports.update = exports.travel = exports.remove = exports.create = void 0;
+exports.reset = exports.list = exports.update = exports.travel = exports.remove = exports.create = void 0;
 var db_1 = require("../data/db");
 // facilitates the addition of spaceships into Spaceship table in MySQL Spaceships Database server. 
 // Given a Spaceship object, adds details to Spaceship table in DBMS.
@@ -102,3 +102,13 @@ var list = function (callback) {
     });
 };
 exports.list = list;
+var reset = function (callback) {
+    var queryString = "DELETE FROM Spaceship";
+    db_1.db.query(queryString, function (err) {
+        if (err) {
+            callback(err);
+        }
+        callback(null);
+    });
+};
+exports.reset = reset;

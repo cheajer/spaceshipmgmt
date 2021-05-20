@@ -109,3 +109,13 @@ export const list = (callback: Function) => {
     }
   )
 };
+
+export const reset = (callback: Function) => {
+  const queryString = "DELETE FROM Spaceship"
+  db.query(queryString,
+    (err) => {
+      if (err) {callback(err)}
+      callback(null)
+    })
+
+};

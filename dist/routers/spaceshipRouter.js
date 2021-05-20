@@ -167,3 +167,16 @@ spaceshipRouter.get('/list', function (req, res) {
         res.status(200).json({ "Spaceships": spaceships });
     });
 });
+/*
+    Router: /spaceship/reset
+    DELETE Method
+    Calls spaceshipModel.reset to remove all rows from Spaceship table in MySQL
+*/
+spaceshipRouter.delete('/reset', function (req, res) {
+    spaceshipModel.reset(function (err) {
+        if (err) { // error handling
+            return res.status(500).json({ "message": err.message });
+        }
+        res.status(200).json({ "message": "Spaceships have been reset." });
+    });
+});

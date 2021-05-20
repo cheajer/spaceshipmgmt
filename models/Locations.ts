@@ -32,6 +32,7 @@ export const remove = (id: number, callback: Function) => {
     );
 };
 
+// lists all locations stored in Spaceships DB.
 export const list = (callback: Function) => {
     const queryString = "SELECT * FROM Location"
   
@@ -43,4 +44,15 @@ export const list = (callback: Function) => {
         callback(null, rows)
       }
     )
+};
+
+// Delete all rows in Spaceship table
+export const reset = (callback: Function) => {
+    const queryString = "DELETE FROM Location"
+    db.query(queryString,
+      (err) => {
+        if (err) {callback(err)}
+        callback(null)
+      })
+  
   };

@@ -18,8 +18,19 @@ export const create = (location: Location, callback: Function) => {
     );
 };
 // facilitates the removal of locations from Location table in MySQL Spaceships Database server.
-// Given a Location ID, removes that location from Location table in DBMS.
+// Given a Location ID, removes that location from Location table in DBMS. 
 export const remove = (id: number, callback: Function) => {
+    const checkQuery = "SELECT count(*) AS count FROM Location WHERE id = (?)"
+    // Checking if the location id exists in known Locations
+    db.query(
+        checkQuery,
+        [id],
+        (err, result) => {
+            if (err) {callback(err)}
+            if ((<RowDataPacket>result)[0].count == 0) {callback({'message': 'Invalid Location ID.'})}
+          }
+    )
+
     const queryString = "DELETE FROM Location WHERE id = (?)"
     db.query(
       queryString,

@@ -1,6 +1,6 @@
 import { Spaceship } from "../types/types";
 import { db } from "../data/db";
-import { RowDataPacket } from "mysql2";
+import { OkPacket, RowDataPacket } from "mysql2";
 
 // facilitates the addition of spaceships into Spaceship table in MySQL Spaceships Database server. 
 // Given a Spaceship object, adds details to Spaceship table in DBMS.
@@ -21,8 +21,11 @@ export const create = (spaceship: Spaceship, callback: Function) => {
 // facilitates the removal of spaceships from Spaceship table in MySQL Spaceships Database server.
 // Given a Spaceship ID, removes that spaceship from Spaceship table in DBMS.
 export const remove = (id: number, callback: Function) => {
+  // Checking if the spaceship id exists in registered Spaceships
+  if (checkSpaceshipID(id) == false) { // checking if spaceship ID exists
+    callback({"message": "Invalid Spaceship ID"})
+  }
   const queryString = "DELETE FROM Spaceship WHERE id = (?)"
-
   db.query(
     queryString,
     [id],
@@ -38,6 +41,11 @@ export const remove = (id: number, callback: Function) => {
 export const travel = (spaceship: number,location: number , callback: Function) => {
   var maxCapacity: number;
   var currentCapacity: number;
+
+  if (checkSpaceshipID(spaceship) == false) { // checking if spaceship ID exists
+    callback({"message": "Invalid Spaceship ID"})
+  }
+
   // To travel, a spaceship's status must be 'operational' not 'maintenance' or 'decommissioned'
   // Only select if status is 'operational'
   const statusQuery = "SELECT * from Spaceship WHERE id = (?) AND status = 'operational' "
@@ -83,6 +91,11 @@ export const travel = (spaceship: number,location: number , callback: Function) 
 // Update a spaceship's status to one of the following [operational, maintenance, decommissioned]
 // Data validation is handled in locationRouter.ts
 export const update = (spaceship: number, status: string , callback: Function) => {
+
+  if (checkSpaceshipID(spaceship) == false) { // checking if spaceship ID exists
+    callback({"message": "Invalid Spaceship ID"})
+  }
+
   const queryString = "UPDATE Spaceship SET status = (?) WHERE id = (?)"
 
   db.query(
@@ -110,6 +123,7 @@ export const list = (callback: Function) => {
   )
 };
 
+// Delete all rows in Spaceship table
 export const reset = (callback: Function) => {
   const queryString = "DELETE FROM Spaceship"
   db.query(queryString,
@@ -119,3 +133,18 @@ export const reset = (callback: Function) => {
     })
 
 };
+
+// helper function - given location ID, if ID exists in Location table, returns true otherwise, false
+function checkSpaceshipID(id: number): boolean {
+  const checkQuery = "SELECT count(*) AS count FROM Spaceship WHERE id = (?)"
+  // Checking if the location id exists in known Locations
+  db.query(
+      checkQuery,
+      [id],
+      (err, result) => {
+          if (err) {return err}
+          if ((<RowDataPacket>result)[0].count == 0) {return false}
+        }
+  )
+  return true
+}

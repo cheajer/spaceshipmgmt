@@ -18,6 +18,10 @@ exports.create = create;
 // facilitates the removal of spaceships from Spaceship table in MySQL Spaceships Database server.
 // Given a Spaceship ID, removes that spaceship from Spaceship table in DBMS.
 var remove = function (id, callback) {
+    // Checking if the spaceship id exists in registered Spaceships
+    if (checkSpaceshipID(id) == false) { // checking if spaceship ID exists
+        callback({ "message": "Invalid Spaceship ID" });
+    }
     var queryString = "DELETE FROM Spaceship WHERE id = (?)";
     db_1.db.query(queryString, [id], function (err) {
         if (err) {
@@ -32,6 +36,9 @@ exports.remove = remove;
 var travel = function (spaceship, location, callback) {
     var maxCapacity;
     var currentCapacity;
+    if (checkSpaceshipID(spaceship) == false) { // checking if spaceship ID exists
+        callback({ "message": "Invalid Spaceship ID" });
+    }
     // To travel, a spaceship's status must be 'operational' not 'maintenance' or 'decommissioned'
     // Only select if status is 'operational'
     var statusQuery = "SELECT * from Spaceship WHERE id = (?) AND status = 'operational' ";
@@ -79,6 +86,9 @@ exports.travel = travel;
 // Update a spaceship's status to one of the following [operational, maintenance, decommissioned]
 // Data validation is handled in locationRouter.ts
 var update = function (spaceship, status, callback) {
+    if (checkSpaceshipID(spaceship) == false) { // checking if spaceship ID exists
+        callback({ "message": "Invalid Spaceship ID" });
+    }
     var queryString = "UPDATE Spaceship SET status = (?) WHERE id = (?)";
     db_1.db.query(queryString, [status, spaceship], function (err) {
         if (err) {
@@ -102,6 +112,7 @@ var list = function (callback) {
     });
 };
 exports.list = list;
+// Delete all rows in Spaceship table
 var reset = function (callback) {
     var queryString = "DELETE FROM Spaceship";
     db_1.db.query(queryString, function (err) {
@@ -112,3 +123,17 @@ var reset = function (callback) {
     });
 };
 exports.reset = reset;
+// helper function - given location ID, if ID exists in Location table, returns true otherwise, false
+function checkSpaceshipID(id) {
+    var checkQuery = "SELECT count(*) AS count FROM Spaceship WHERE id = (?)";
+    // Checking if the location id exists in known Locations
+    db_1.db.query(checkQuery, [id], function (err, result) {
+        if (err) {
+            return err;
+        }
+        if (result[0].count == 0) {
+            return false;
+        }
+    });
+    return true;
+}

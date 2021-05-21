@@ -1,16 +1,16 @@
 # spaceshipmgmt
 A RESTful API for managing spaceships.
 
-##Spaceship Database API
+## Spaceship Database API
 A simple REST API that deals with the management and creation of hypothetical spaceships and hypothetical locations.
 
-###Methods
+### Methods
 ####/spaceship
 
-#####/spaceship/list - GET
+##### /spaceship/list - GET
 Get a list of all current spaceships that have been registered.
 
-#####/spaceship/create - POST
+##### /spaceship/create - POST
 Create a new spaceship with required parameters, name, model, location ID and status. Status has to be either decommissioned, operational or maintenance.
 
 Example POST Object:
@@ -21,7 +21,7 @@ Example POST Object:
     'Status': 'operational
 }
 
-#####/spaceship/update - PUT
+##### /spaceship/update - PUT
 Update a spaceship's status to operational, maintenance or decommissioned.
 
 Example PUT Object:
@@ -30,7 +30,7 @@ Example PUT Object:
     'status': 'decommissioned'
 }
 
-#####//spaceship/remove - DELETE
+##### //spaceship/remove - DELETE
 Remove a spaceship from the database. Must provide ID of spaceship to be removed.
 
 Example DELETE Object:
@@ -38,7 +38,7 @@ Example DELETE Object:
     'id': 1
 }
 
-#####//spaceship/travel - PUT
+##### //spaceship/travel - PUT
 Update a spaceship's location to signify their new location. User to provide ID of spaceship to be moved, and ID of destination location.
 
 Example PUT Object:
@@ -47,13 +47,13 @@ Example PUT Object:
     'location': 2
 }
 
-####/location
+#### /location
 
 
-#####/location/list - GET
+##### /location/list - GET
 Get a list of all current locations that have been registered.
 
-#####//location/create - POST
+##### //location/create - POST
 Create a new location with required parameters, city, planet, and max capacity of ships allowed at location.
 
 Example POST Object:
@@ -63,7 +63,7 @@ Example POST Object:
     'Capacity': 1
 }
 
-#####//location/remove - DELETE
+##### //location/remove - DELETE
 Remove a location from the database. Must provide ID of location to be removed.
 
 Example DELETE Object:
